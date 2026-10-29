@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **`openobserve_pipeline_destination` created an alert destination, so the
+  pipeline dropped its records.** OpenObserve stores a destination as an alert
+  destination unless create and update carry `module=pipeline`, and a
+  pipeline's `remote_stream` node cannot send to an alert destination. The
+  provider now sends `module=pipeline` on create and update
+  ([#10](https://github.com/openobserve/terraform-provider-openobserve/issues/10)).
+  A destination created by an earlier version is stored as an alert
+  destination; if a pipeline still drops its records, recreate it (for
+  example with `terraform apply -replace`).
+
 ## [1.4.2] - 2026-10-01
 
 ### Fixed
